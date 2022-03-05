@@ -1,4 +1,7 @@
 defmodule FF14Calendar.Fetes do
+  # Increment this each time the events change time/contents.
+  @sequence 1
+
   @epoch_interval Timex.Duration.from_hours(68)
   @epoch_margin Timex.Duration.from_days(7)
 
@@ -53,7 +56,13 @@ defmodule FF14Calendar.Fetes do
       summary: "Skyrise Celebration: Session #{session}/#{@sessions}",
       dtstart: start_time |> Timex.to_erl(),
       dtend: end_time |> Timex.to_erl(),
-      description: "Firmament fête, epoch ##{epoch}, session number #{session} of #{@sessions}."
+      description: "Firmament fête, epoch ##{epoch}, session number #{session} of #{@sessions}.",
+      uid: generate_uid(epoch, session),
+      sequence: @sequence
     }
+  end
+
+  defp generate_uid(epoch, session) do
+    UUID.uuid3(:oid, "ff14-fetes-#{epoch}-#{session}")
   end
 end

@@ -46,6 +46,18 @@ defmodule FetesTest do
            } = calendar.events |> List.last()
   end
 
+  test "calendar entries have UID and sequence" do
+    assert calendar = Fetes.calendar(~U[2022-05-01 00:00:00Z])
+
+    assert %Event{} = event1 = calendar.events |> Enum.at(7)
+    assert event1.uid == "1daa9094-15c1-3789-9985-51b1157eeb76"
+    assert is_integer(event1.sequence) && event1.sequence > 0
+
+    assert %Event{} = event2 = calendar.events |> Enum.at(18)
+    assert event2.uid == "34084cd5-66cd-3f89-8d48-a6f199725b4e"
+    assert is_integer(event2.sequence) && event2.sequence > 0
+  end
+
   defp erl_to_unix(erl_time) do
     erl_time
     |> NaiveDateTime.from_erl!()
