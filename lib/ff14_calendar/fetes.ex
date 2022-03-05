@@ -1,6 +1,6 @@
 defmodule FF14Calendar.Fetes do
   # Increment this each time the events change time/contents.
-  @sequence 1
+  @sequence 2
 
   @epoch_interval Timex.Duration.from_hours(68)
   @epoch_margin Timex.Duration.from_days(7)
@@ -48,8 +48,7 @@ defmodule FF14Calendar.Fetes do
     Timex.compare(dt1, dt2) == -1
   end
 
-  defp event_for_epoch(epoch, {session, start}) do
-    start_time = Timex.add(start, Timex.Duration.from_hours(2 * (session - 1)))
+  defp event_for_epoch(epoch, {session, start_time}) do
     end_time = Timex.add(start_time, @session_length)
 
     %ICalendar.Event{

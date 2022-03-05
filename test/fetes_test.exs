@@ -32,18 +32,27 @@ defmodule FetesTest do
            } = calendar.events |> List.first()
 
     assert %Event{
-             dtstart: {{2022, 3, 10}, {2, 0, 0}},
-             dtend: {{2022, 3, 10}, {2, 30, 0}},
+             dtstart: {{2022, 3, 9}, {20, 0, 0}},
+             dtend: {{2022, 3, 9}, {20, 30, 0}},
              summary: "Skyrise Celebration: Session 4/12",
              description: "Firmament fête, epoch #3, session number 4 of 12."
            } = calendar.events |> Enum.at(3)
 
     assert %Event{
-             dtstart: {{2022, 3, 22}, {19, 0, 0}},
-             dtend: {{2022, 3, 22}, {19, 30, 0}},
+             dtstart: {{2022, 3, 21}, {21, 0, 0}},
+             dtend: {{2022, 3, 21}, {21, 30, 0}},
              summary: "Skyrise Celebration: Session 12/12",
              description: "Firmament fête, epoch #7, session number 12 of 12."
            } = calendar.events |> List.last()
+  end
+
+  test "sessions are separated by two hours" do
+    assert calendar = Fetes.calendar(~U[2022-03-01 00:00:00Z])
+
+    assert %Event{dtstart: start1} = calendar.events |> Enum.at(7)
+    assert %Event{dtstart: start2} = calendar.events |> Enum.at(8)
+
+    assert erl_to_unix(start2) - erl_to_unix(start1) == 3600 * 2
   end
 
   test "calendar entries have UID and sequence" do
