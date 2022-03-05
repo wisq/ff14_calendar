@@ -25,7 +25,9 @@ defmodule Ff14Calendar.MixProject do
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
       {:icalendar, "~> 1.1.0"},
       {:briefly, "~> 0.3", only: :test, runtime: false},
-      {:uuid, "~> 1.1"}
+      {:uuid, "~> 1.1"},
+      {:ex_aws, "~> 2.0"},
+      {:ex_aws_s3, "~> 2.0"}
     ]
   end
 end
